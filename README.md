@@ -1,4 +1,129 @@
-> **Android 5.1 fork.** This branch ports the launcher to Android 5.1 (API 22) for old TV boxes such as the M8S+. See [ANDROID5.md](ANDROID5.md) for what changed and how to install; a ready APK is on the [Releases](https://github.com/aliaksandrshandrokha/cleanyourtv/releases) page. Original project: [Gathin23/cleanyourtv](https://github.com/Gathin23/cleanyourtv).
+<h1 align="center">Clean Your TV for Android 5.1</h1>
+
+<p align="center">
+  <b>The Clean Your TV launcher, adapted for old Android 5.1 TV boxes and tested on real hardware.</b><br>
+  The original needs Android 8 or newer, so it won't install on the M8S+ and boxes like it. This fork will.
+</p>
+
+<p align="center">
+  <a href="https://github.com/aliaksandrshandrokha/cleanyourtv/releases/download/v3.4-android5.1/cleanyourtv-android5.1-v3.4.apk"><b>⬇ Download the APK (v3.4, 0.8 MB)</b></a>
+  ·
+  <a href="#install-on-an-android-51-box">Install</a>
+  ·
+  <a href="ANDROID5.md">What changed</a>
+  ·
+  <a href="https://github.com/Gathin23/cleanyourtv">Original project</a>
+</p>
+
+## Why this fork
+
+Lots of Amlogic and Rockchip boxes from 2015–2017 (M8S+, MXQ, MXIII, T95 and the like) still run
+Android 5.1 with a stock launcher full of dead tiles. The original Clean Your TV launcher is exactly what
+they need, but it is built for Android 8 (API 26) and refuses to install below that.
+
+This branch is a **complete port of the launcher to Android 5.1 (API 22)**, not a patched build:
+
+| | |
+|---|---|
+| **Every newer API call is handled** | Each platform call newer than Android 5.1 goes through one `Compat` class with the closest older behaviour, so nothing crashes on a missing method. |
+| **Built for the screens these boxes have** | They report 1080p at 240 dpi (1280 dp wide, not the 960 dp the layout was drawn for). Tiles, columns and the dock were re-tuned for that. |
+| **Made for boxes, not TVs** | These boxes ship phone apps without TV banners, so the App library is on and apps without a banner get a clean icon tile. |
+| **Same launcher otherwise** | Same look, same remote controls, same themes and `config.xml` keys. No network permission, no tracking, nothing extra added. |
+
+## Tested on real hardware
+
+Not just "it builds": every change was installed and checked on a real box with its own remote.
+
+| | |
+|---|---|
+| **Box** | M8S+ (Amlogic), Android 5.1.1, 1.6 GB RAM, 1080p output |
+| **Home** | Becomes the default Home and comes back on the Home key and after leaving an app |
+| **Remote** | D-pad from every edge of the dock, the top bar and the App library; OK, Back and long-press menus |
+| **Dock** | Adding apps to it; sideways scrolling when there are more apps than fit |
+| **App library** | Lists ordinary phone apps as well as TV apps; one press puts an app on Home |
+| **Top bar** | Clock, date, greeting, Wi-Fi name, Settings |
+| **Apps launched from it** | SmartTube, Zona, Firefox, Aptoide TV, Material Files, games |
+
+Found a box where it misbehaves? [Open an issue](https://github.com/aliaksandrshandrokha/cleanyourtv/issues) with the model and Android version.
+
+## Install on an Android 5.1 box
+
+You need a computer on the same network as the box, with [ADB](https://developer.android.com/tools/releases/platform-tools)
+(Android platform tools) installed.
+
+| Where | What to do |
+|---|---|
+| **1. On the box** | Settings → About → press OK on **Build** seven times → back → Developer options → **USB debugging** on. Many boxes also have **ADB over network** or **Remote debugging** there: turn it on. Note the box's IP address (Settings → Network). |
+| **2. On your computer** | Download [the APK](https://github.com/aliaksandrshandrokha/cleanyourtv/releases/download/v3.4-android5.1/cleanyourtv-android5.1-v3.4.apk), then connect and install it (commands below). Accept "Allow USB debugging?" on the TV the first time. |
+| **3. On the box** | Press **Home** on the remote, pick **Home** (Clean Your TV) and choose **Always**. |
+
+```bash
+adb connect 192.168.1.50:5555
+```
+
+```bash
+adb install -r cleanyourtv-android5.1-v3.4.apk
+```
+
+Replace `192.168.1.50` with your box's IP address. If the box never asks which Home to use, the stock launcher
+is still set as the default: Settings → Apps → the stock launcher → **Clear defaults**, then press Home again.
+
+**Build it yourself instead.** JDK 17 and Android SDK platform 34 with build-tools 34:
+
+```bash
+cd launcher && ./gradlew :app:assembleRelease && adb install -r app/build/outputs/apk/release/app-release.apk
+```
+
+**Change the layout.** Columns, dock size, buttons and the rest live in
+[`launcher/app/src/main/res/values/config.xml`](launcher/app/src/main/res/values/config.xml); the defaults this
+fork changed are listed in [ANDROID5.md](ANDROID5.md#layout-defaults-in-this-branch). Rebuild and reinstall after editing.
+
+### Cleaning up the box (optional)
+
+The repository's debloat scripts use commands Android 5 doesn't have (`cmd package`, and on most boxes
+`pm disable-user` is refused). On Android 5.1, `pm hide` does the same job without root and is fully reversible:
+
+```bash
+adb shell pm hide com.android.vending
+```
+
+```bash
+adb shell pm unhide com.android.vending
+```
+
+Hide only what you know you don't use, one package at a time, and keep a list so you can undo it.
+Leave the stock launcher enabled as a fallback Home.
+
+### Going back
+
+Uninstall the launcher and the box returns to its stock Home screen:
+
+```bash
+adb uninstall com.gathin.tvhome
+```
+
+<details>
+<summary><b>По-русски</b></summary>
+
+**Clean Your TV для Android 5.1** — лаунчер Clean Your TV, адаптированный для старых ТВ-приставок на Android 5.1
+(M8S+, MXQ, MXIII, T95 и подобных). Оригинал требует Android 8 и на таких приставках не ставится, этот форк ставится.
+Всё проверено на живой приставке M8S+ (Android 5.1.1) с родным пультом: Home, док, библиотека приложений,
+верхняя панель, запуск приложений.
+
+**Установка:** включите на приставке отладку по USB (Настройки → Об устройстве → 7 раз нажать на «Номер сборки» →
+Для разработчиков → Отладка по USB, и «Отладка по сети», если есть), скачайте
+[APK](https://github.com/aliaksandrshandrokha/cleanyourtv/releases/download/v3.4-android5.1/cleanyourtv-android5.1-v3.4.apk),
+затем на компьютере выполните `adb connect <IP приставки>:5555` и `adb install -r cleanyourtv-android5.1-v3.4.apk`.
+Нажмите Home на пульте, выберите «Home» и «Всегда».
+
+**Удаление:** `adb uninstall com.gathin.tvhome`, приставка вернётся к штатному экрану.
+
+</details>
+
+---
+
+<p align="center"><i>Below is the original project's README. Its Quick start and scripts are written for Android 8+ TVs;
+on an Android 5.1 box use the steps above.</i></p>
 
 <p align="center">
   <a href="https://cleanyour.tv"><img src="https://raw.githubusercontent.com/Gathin23/cleanyourtv/main/docs/banner.png" alt="CleanYourTV. Your TV, minus the ads. Strip the bloatware from any Android TV or Google TV over Wi-Fi and replace the ad-filled home screen with a clean launcher that looks like an Apple TV. No root, no cable, nothing uninstalled, and a one-line restore." width="800"></a>
