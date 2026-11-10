@@ -100,6 +100,8 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static final float FOCUS_SCALE = 1.10f;
     /** Design size of a tile (dp); tiles shrink from here when the columns don't fit, see tileWidthPx. */
     static final float DESIGN_W_DP = 180f, DESIGN_H_DP = 101f;
+    /** The widest grid (dp) a 960dp-wide screen gives; DESIGN_W_DP is the tile cap up to this width. */
+    static final float REFERENCE_INNER_DP = 880f;
 
     /**
      * Tile width for a grid of this inner width: the cell minus room for the focus zoom and the glass
@@ -108,6 +110,10 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static int tileWidthPx(int innerWidthPx, int columns, float density) {
         int design = Math.round(DESIGN_W_DP * density);
         if (innerWidthPx <= 0 || columns <= 0) return design;
+        // API 22 port: boxes that report 1080p at 240dpi are 1280dp wide, not the 960dp the design size was drawn
+        // for. There the cap grows with the grid, so the tiles fill their columns instead of floating in wide gaps.
+        float wide = innerWidthPx / (REFERENCE_INNER_DP * density);
+        if (wide > 1f) design = Math.round(design * wide);
         int cell = innerWidthPx / columns;
         int fit = (int) ((cell - 12 * density) / FOCUS_SCALE);
         return Math.max(Math.round(80 * density), Math.min(design, fit));

@@ -314,20 +314,20 @@
     <!-- Every app in one row: the dock apps first, the rest after them, and the row scrolls sideways when focus
          reaches its edge. No grid below; rows_below_dock is ignored. Needs dock_row. Can also be set with
          "single_row" in a theme. -->
-    <bool name="single_row">false</bool>
+    <bool name="single_row">true</bool>
     <!-- With single_row, the band runs behind every app in the row, apps installed later included, instead of
          the dock apps only. Can also be set with "dock_band_all" in a theme. -->
-    <bool name="dock_band_all">false</bool>
+    <bool name="dock_band_all">true</bool>
     <!-- The dock band's padding equals the gap between its tiles on all four sides (as far as the grid's edges leave room),
          so its corners are concentric with the tiles' and the spacing reads even. false (the default) keeps the fixed
          14dp above and below, up to 22dp at the sides and 26dp corners. Can also be set with "dock_even_padding": true in a theme's config.json. -->
-    <bool name="dock_even_padding">false</bool>
+    <bool name="dock_even_padding">true</bool>
     <!-- A reorder button (two arrows) in the top bar. Off by default: reordering is also in the Settings
          button's long-press menu, so it needs no extra button on screen. -->
     <bool name="reorder_button">false</bool>
     <!-- Wi-Fi and Settings as round icon-only buttons (the network name moves to the talkback description);
          Inputs keeps its label. -->
-    <bool name="icon_only_buttons">false</bool>
+    <bool name="icon_only_buttons">true</bool>
     <!-- The Inputs pill as a round icon button too (the label moves to the talkback description). -->
     <bool name="icon_only_inputs">false</bool>
     <!-- With vpn_pill, the VPN pill as a round icon button too: an open lock on the plain glass button while no VPN is
@@ -351,10 +351,10 @@
     <!-- The App library pill after the last Home row. false hides it while library_button is on, so the top-bar
          button stays the way in, and Down from the last row stays put as with app_library off. Can also be set
          with "show_library_pill": false in a theme's config.json. -->
-    <bool name="show_library_pill">true</bool>
+    <bool name="show_library_pill">false</bool>
     <!-- With icon_only_buttons: keep the network name on the Wi-Fi pill up to this width in dp, cut with an ellipsis.
          0 leaves the Wi-Fi pill as an icon. -->
-    <integer name="wifi_label_width">0</integer>
+    <integer name="wifi_label_width">180</integer>
 
     <!-- The Wi-Fi/Ethernet pill in the top bar. false hides it (on Android 14 with Location off it can
          only say "Wi-Fi", not the network name). Can also be set with "show_network_pill" in a theme. -->
@@ -409,7 +409,7 @@
 
     <!-- Tiles per row in the grid; the dock always has this many slots. Tiles are 180dp wide at 4 columns and
          shrink to fit from 5 up (about 144dp at 5, 117dp at 6 on a 1080p TV). -->
-    <integer name="columns">4</integer>
+    <integer name="columns">5</integer>
 
     <!-- Basic motion is on; advanced effects are opt-in in the launcher's own Settings screen. -->
     <bool name="animations">true</bool>
@@ -551,5 +551,6 @@
 
     <!-- Tiles drawn from the app's icon and name instead of its banner (for banners that crop badly). -->
     <string-array name="icon_tiles" translatable="false">
+        <item>org.mozilla.firefox</item>
     </string-array>
 </resources>
