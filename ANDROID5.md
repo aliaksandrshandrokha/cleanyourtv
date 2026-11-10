@@ -7,6 +7,7 @@ This branch lets the Clean Your TV launcher install and run on Android 5.1 boxes
 ## What changed (launcher only)
 
 - `minSdk` 26 -> 22, with core library desugaring for `java.time`, `java.util.function` and `java.nio.file`.
+- `app_library` and `library_button` are on by default: Android 5 boxes ship ordinary (non-leanback) apps, which only the App library can list.
 - `Compat.java`: every platform call newer than API 22 goes through it, with the nearest older behaviour as fallback.
 - `PillTextView.java`: the top-bar pills tint their own icons, since `android:drawableTint` is Android 6.
 
