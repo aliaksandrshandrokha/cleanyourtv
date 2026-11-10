@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
 import android.provider.Settings;
 
 /** open_on_start_choice: the app Home opens once after each boot, picked in Launcher settings. */
@@ -46,10 +44,8 @@ final class OpenOnStart {
 
     /** Android has reached the internet through the active network (ACCESS_NETWORK_STATE). */
     static boolean online(Context ctx) {
-        ConnectivityManager cm = ctx.getSystemService(ConnectivityManager.class);
-        Network n = cm != null ? cm.getActiveNetwork() : null;
-        NetworkCapabilities caps = n != null ? cm.getNetworkCapabilities(n) : null;
-        return caps != null && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+        return Compat.online(cm);
     }
 
     /** The app's TV entry point, or its phone one; null when it is uninstalled or disabled, so Home stays. */

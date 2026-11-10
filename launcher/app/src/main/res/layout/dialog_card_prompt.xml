@@ -71,7 +71,7 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <TextView
+        <com.gathin.tvhome.PillTextView
             android:id="@+id/btnKeep"
             style="@style/TopButton"
             android:text="@string/card_keep_hidden"
@@ -80,7 +80,7 @@
             android:nextFocusLeft="@+id/btnKeep"
             android:nextFocusRight="@+id/btnShow" />
 
-        <TextView
+        <com.gathin.tvhome.PillTextView
             android:id="@+id/btnShow"
             style="@style/TopButton"
             android:text="@string/card_show"
