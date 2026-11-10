@@ -1,20 +1,12 @@
-<h1 align="center">Clean Your TV for Android 5.1</h1>
+# Clean Your TV for Android 5.1
 
-<p align="center">
-  A clean, fast home screen for old Android 5.1 TV boxes, tested on real hardware.<br>
-  A port of the <a href="https://github.com/Gathin23/cleanyourtv">Clean Your TV</a> launcher, which itself needs Android 8 or newer.
-</p>
+A clean, fast home screen for old Android 5.1 TV boxes, tested on real hardware.
+A port of the [Clean Your TV](https://github.com/Gathin23/cleanyourtv) launcher, which itself needs Android 8 or newer.
 
-<p align="center">
-  <a href="https://github.com/aliaksandrshandrokha/cleanyourtv/releases/download/v3.4-android5.1/cleanyourtv-android5.1-v3.4.apk"><b>⬇ Download the APK (v3.4, 0.8 MB)</b></a>
-  · <a href="#install">Install</a>
-  · <a href="#settings">Settings</a>
-  · <a href="#uninstall">Uninstall</a>
-</p>
+**[⬇ Download the APK (v3.4, 0.8 MB)](https://github.com/aliaksandrshandrokha/cleanyourtv/releases/download/v3.4-android5.1/cleanyourtv-android5.1-v3.4.apk)**
+· [Install](#install) · [Settings](#settings) · [Uninstall](#uninstall)
 
-<p align="center">
-  <img src="docs/android5-home.jpg" alt="The launcher on an M8S+ box: clock and date at the top, one row of app tiles in a dock at the bottom" width="800">
-</p>
+![The launcher on an M8S+ box: clock and date at the top, one row of app tiles in a dock at the bottom](docs/android5-home.jpg)
 
 ## Why
 
